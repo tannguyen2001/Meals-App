@@ -1,3 +1,5 @@
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTitle from "../components/CategoryGridTitle";
 
@@ -11,11 +13,13 @@ function CategoriesScreen({ navigation }) {
       });
     }
     return (
-      <CategoryGridTitle
-        title={itemData.item.title}
-        color={itemData.item.color}
-        onPress={pressHandler}
-      />
+      <View style={styles.rootContainer}>
+        <CategoryGridTitle
+          title={itemData.item.title}
+          color={itemData.item.color}
+          onPress={pressHandler}
+        />
+      </View>
     );
   }
 
@@ -28,5 +32,12 @@ function CategoriesScreen({ navigation }) {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    backgroundColor: "#3f2f25",
+    flex: 1,
+  },
+});
 
 export default CategoriesScreen;

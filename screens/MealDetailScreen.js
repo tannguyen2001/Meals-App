@@ -7,7 +7,7 @@ import {
   Button,
 } from "react-native";
 
-import { useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 
 import SubTitle from "../components/MealDetail/SubTitle";
 import MealDetails from "../components/MealDetails";

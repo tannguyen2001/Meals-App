@@ -1,3 +1,4 @@
+import React from "react";
 import { View, Pressable, Text, StyleSheet, Platform } from "react-native";
 
 function CategoryGridTitle({ title, color, onPress }) {
