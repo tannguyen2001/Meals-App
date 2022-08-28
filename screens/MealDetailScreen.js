@@ -1,13 +1,7 @@
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Button,
-} from "react-native";
+import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
 
 import React, { useLayoutEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import SubTitle from "../components/MealDetail/SubTitle";
 import MealDetails from "../components/MealDetails";
@@ -15,14 +9,30 @@ import List from "../components/MealDetail/List";
 
 import { MEALS } from "../data/dummy-data";
 import IconButton from "../components/IconButton";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
+// import { FavoritesContext } from "../store/context/favorites-context";
 
 function MealDetailScreen({ route, navigation }) {
+  // const favoriteMealCtx = useContext(FavoritesContext);
+
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+
+  const dispatch = useDispatch();
+
   const mealId = route.params.mealId;
 
   const selectedMeal = MEALS.find((meal) => meal.id == mealId);
 
-  function headerButtonPressHandler() {
-    console.log("Pressed!");
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
+
+  function changeFavoriesStatusHandler() {
+    if (mealIsFavorite) {
+      // favoriteMealCtx.removeFavorite(mealId);
+      dispatch(removeFavorite({ id: mealId }));
+    } else {
+      // favoriteMealCtx.addFavorite(mealId);
+      dispatch(addFavorite({ id: mealId }));
+    }
   }
 
   useLayoutEffect(() => {
@@ -30,14 +40,14 @@ function MealDetailScreen({ route, navigation }) {
       headerRight: () => {
         return (
           <IconButton
-            icon="star"
+            icon={mealIsFavorite ? "star" : "star-outline"}
             color="#fff"
-            onPress={headerButtonPressHandler}
+            onPress={changeFavoriesStatusHandler}
           />
         );
       },
     });
-  }, [navigation, headerButtonPressHandler]);
+  }, [navigation, changeFavoriesStatusHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
